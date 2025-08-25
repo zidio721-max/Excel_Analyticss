@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - ExcelFY</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0b0d 0%, #151821 50%, #1a1d25 100%);
+            color: #e4e6ea;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(17, 20, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-menu a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #6366f1;
+        }
+
+        .nav-menu a.active {
+            color: #6366f1;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -8px;
+            left: 50%;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-menu a:hover::after, .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(30, 35, 42, 0.8);
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(30, 35, 42, 1);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: rgba(17, 20, 26, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse 50% 50% at 70% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .welcome-text h1 {
+            font-size: 36px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .welcome-text p {
+            font-size: 18px;
+            color: #94a3b8;
+            margin-bottom: 24px;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .welcome-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            min-width: 300px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(30, 35, 42, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #6366f1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        /* Quick Actions Grid */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .action-card {
+            background: rgba(17, 20, 26, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .action-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.05), transparent);
+            transition: left 0.6s;
+        }
+
+        .action-card:hover::before {
+            left: 100%;
+        }
+
+        .action-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .action-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .action-description {
+            color: #94a3b8;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .action-button {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Recent Projects */
+        .recent-section {
+            background: rgba(17, 20, 26, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 32px;
+            backdrop-filter: blur(20px);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .view-all-link {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .view-all-link:hover {
+            color: #8b5cf6;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: rgba(30, 35, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            background: rgba(30, 35, 42, 0.8);
+            transform: translateY(-2px);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .project-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .project-date {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .project-type {
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .project-description {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .project-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .project-btn-primary {
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .project-btn-primary:hover {
+            background: rgba(99, 102, 241, 0.3);
+            color: #c7d2fe;
+        }
+
+        .project-btn-secondary {
+            background: transparent;
+            color: #94a3b8;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .project-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            opacity: 0.5;
+        }
+
+        .empty-state-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .empty-state-description {
+            font-size: 16px;
+            color: #94a3b8;
+            margin-bottom: 32px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .welcome-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .welcome-stats {
+                justify-self: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 16px;
+            }
+            
+            .welcome-section, .recent-section {
+                padding: 24px;
+            }
+            
+            .welcome-text h1 {
+                font-size: 28px;
+            }
+            
+            .welcome-stats {
+                grid-template-columns: 1fr;
+                min-width: auto;
+            }
+            
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .quick-actions {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">ExcelFY</div>
+            <nav class="nav-menu">
+                <a href="home.html" class="active">Home</a>
+                <a href="dashboard.html">New Project</a>
+                <a href="#">My Projects</a>
+                <a href="#">Templates</a>
+                <a href="#">Settings</a>
+            </nav>
+            <div class="user-menu">
+                <div class="user-avatar" onclick="toggleUserMenu()" title="User Menu">
+                    JD
+                </div>
+                <a href="login.html" class="btn btn-secondary">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div class="welcome-content">
+                <div class="welcome-text">
+                    <h1>Welcome back, John! 👋</h1>
+                    <p>Ready to transform your data into stunning visualizations? Let's create something amazing today.</p>
+                    <div class="quick-actions">
+                        <a href="dashboard.html" class="btn btn-primary">🚀 New Project</a>
+                        <a href="#" class="btn btn-secondary">📊 Browse Templates</a>
+                    </div>
+                </div>
+                <div class="welcome-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">48</div>
+                        <div class="stat-label">Charts</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">Downloads</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="actions-grid">
+            <div class="action-card" onclick="window.location.href='dashboard.html'">
+                <div class="action-icon">📊</div>
+                <h3 class="action-title">Create New Chart</h3>
+                <p class="action-description">Upload your Excel or CSV file and generate beautiful 2D and 3D visualizations instantly.</p>
+                <a href="dashboard.html" class="action-button">
+                    Get Started →
+                </a>
+            </div>
+
+            <div class="action-card" onclick="showComingSoon('AI Assistant')">
+                <div class="action-icon">🤖</div>
+                <h3 class="action-title">AI Data Assistant</h3>
+                <p class="action-description">Get intelligent insights and recommendations for your data analysis with our AI-powered assistant.</p>
+                <a href="#" class="action-button" onclick="event.preventDefault(); showComingSoon('AI Assistant');">
+                    Try AI Assistant →
+                </a>
+            </div>
+
+            <div class="action-card" onclick="showComingSoon('Templates')">
+                <div class="action-icon">📋</div>
+                <h3 class="action-title">Chart Templates</h3>
+                <p class="action-description">Browse our collection of professional chart templates and customize them for your needs.</p>
+                <a href="#" class="action-button" onclick="event.preventDefault(); showComingSoon('Templates');">
+                    Browse Templates →
+                </a>
+            </div>
+
+            <div class="action-card" onclick="showComingSoon('Collaboration')">
+                <div class="action-icon">👥</div>
+                <h3 class="action-title">Team Collaboration</h3>
+                <p class="action-description">Share your projects with team members and collaborate in real-time on data visualizations.</p>
+                <a href="#" class="action-button" onclick="event.preventDefault(); showComingSoon('Collaboration');">
+                    Start Collaborating →
+                </a>
+            </div>
+        </section>
+
+        <!-- Recent Projects -->
+        <section class="recent-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    📈 Recent Projects
+                </h2>
+                <a href="#" class="view-all-link" onclick="showComingSoon('Project Management')">
+                    View All →
+                </a>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Projects will be populated by JavaScript -->
+            </div>
+
+            <!-- Empty State (shown when no projects) -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-state-icon">📊</div>
+                <h3 class="empty-state-title">No Projects Yet</h3>
+                <p class="empty-state-description">
+                    Create your first data visualization project to get started with ExcelFY's powerful analytics tools.
+                </p>
+                <a href="dashboard.html" class="btn btn-primary">Create Your First Project</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Sample project data (in real app, this would come from API)
+        const sampleProjects = [
+            {
+                id: 1,
+                name: "Sales Analysis Q4",
+                type: "Bar Chart",
+                description: "Quarterly sales performance analysis with regional breakdown",
+                date: "2 hours ago",
+                lastModified: "2025-01-20"
+            },
+            {
+                id: 2,
+                name: "Marketing ROI Dashboard",
+                type: "Line Chart",
+                description: "Campaign performance tracking and ROI calculations",
+                date: "1 day ago",
+                lastModified: "2025-01-19"
+            },
+            {
+                id: 3,
+                name: "Customer Segmentation",
+                type: "Pie Chart",
+                description: "Customer demographic analysis and market segmentation",
+                date: "3 days ago",
+                lastModified: "2025-01-17"
+            },
+            {
+                id: 4,
+                name: "3D Product Analysis",
+                type: "3D Chart",
+                description: "Interactive 3D visualization of product performance metrics",
+                date: "1 week ago",
+                lastModified: "2025-01-13"
+            }
+        ];
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Home page loaded');
+            loadRecentProjects();
+            updateWelcomeMessage();
+        });
+
+        function loadRecentProjects() {
+            const projectsGrid = document.getElementById('projectsGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            if (sampleProjects.length === 0) {
+                projectsGrid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            projectsGrid.innerHTML = '';
+            emptyState.style.display = 'none';
+
+            sampleProjects.forEach(project => {
+                const projectCard = createProjectCard(project);
+                projectsGrid.appendChild(projectCard);
+            });
+        }
+
+        function createProjectCard(project) {
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            card.onclick = () => openProject(project.id);
+
+            card.innerHTML = `
+                <div class="project-header">
+                    <div>
+                        <div class="project-name">${project.name}</div>
+                        <div class="project-date">${project.date}</div>
+                    </div>
+                    <div class="project-type">${project.type}</div>
+                </div>
+                <div class="project-description">${project.description}</div>
+                <div class="project-actions">
+                    <a href="#" class="project-btn project-btn-primary" onclick="event.stopPropagation(); openProject(${project.id})">
+                        Open
+                    </a>
+                    <a href="#" class="project-btn project-btn-secondary" onclick="event.stopPropagation(); shareProject(${project.id})">
+                        Share
+                    </a>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function openProject(projectId) {
+            console.log('Opening project:', projectId);
+            // In a real app, this would load the specific project
+            showMessage('Opening project... This would navigate to the project editor.', 'success');
+            
+            // Simulate navigation to dashboard with project data
+            setTimeout(() => {
+                window.location.href = 'dashboard.html?project=' + projectId;
+            }, 1500);
+        }
+
+        function shareProject(projectId) {
+            console.log('Sharing project:', projectId);
+            showMessage('Share link copied to clipboard! (Demo feature)', 'success');
+        }
+
+        function updateWelcomeMessage() {
+            const hours = new Date().getHours();
+            let greeting = 'Welcome back';
+            
+            if (hours < 12) greeting = 'Good morning';
+            else if (hours < 17) greeting = 'Good afternoon';
+            else greeting = 'Good evening';
+            
+            const welcomeTitle = document.querySelector('.welcome-text h1');
+            if (welcomeTitle) {
+                welcomeTitle.textContent = `${greeting}, John! 👋`;
+            }
+        }
+
+        function showComingSoon(feature) {
+            showMessage(`${feature} feature is coming soon! Stay tuned for updates.`, 'info');
+        }
+
+        function toggleUserMenu() {
+            showMessage('User menu would appear here with profile options, settings, etc.', 'info');
+        }
+
+        function showMessage(message, type = 'success') {
+            // Create message element
+            const messageEl = document.createElement('div');
+            messageEl.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 24px;
+                z-index: 10000;
+                padding: 16px 24px;
+                border-radius: 12px;
+                font-weight: 600;
+                font-size: 14px;
+                max-width: 400px;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+
+            if (type === 'success') {
+                messageEl.style.background = 'rgba(34, 197, 94, 0.1)';
+                messageEl.style.border = '1px solid rgba(34, 197, 94, 0.2)';
+                messageEl.style.color = '#86efac';
+            } else if (type === 'info') {
+                messageEl.style.background = 'rgba(59, 130, 246, 0.1)';
+                messageEl.style.border = '1px solid rgba(59, 130, 246, 0.2)';
+                messageEl.style.color = '#93c5fd';
+            }
+
+            messageEl.textContent = message;
+            document.body.appendChild(messageEl);
+
+            // Animate in
+            setTimeout(() => {
+                messageEl.style.transform = 'translateX(0)';
+            }, 100);
+
+            // Remove after 5 seconds
+            setTimeout(() => {
+                messageEl.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (messageEl.parentNode) {
+                        messageEl.parentNode.removeChild(messageEl);
+                    }
+                }, 300);
+            }, 5000);
+        }
+
+        // Add some interactive hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add subtle animations to cards
+            const cards = document.querySelectorAll('.action-card, .project-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-4px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
